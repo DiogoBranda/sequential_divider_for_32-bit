@@ -66,20 +66,59 @@ end
 // The verifications:
 initial
 begin
+	$display("Teste 1");
 	# ( 10*CLOCK_PERIOD )
 	execdivide( 32'h12345678, 32'h0beefeba ); // call task
 	# ( 10*CLOCK_PERIOD )
-	$display("Quotient = %h", quotient );
-	$display("Rest = %h", rest );
-	execdivide( 32'h00000000, 32'h0beefeba ); // call task
-    # ( 10*CLOCK_PERIOD )
-	$display("Quotient = %h", quotient );
-	$display("Rest = %h", rest );
+	$display("Teste 2");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'h00000000, 32'h00000000 ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 3");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'h00000001, 32'h00000000 ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 4");
 	# ( 10*CLOCK_PERIOD )
 	execdivide( 32'h00000001, 32'h00000001 ); // call task
 	# ( 10*CLOCK_PERIOD )
-	$display("Quotient = %h", quotient );
-	$display("Rest = %h", rest );
+	$display("Teste 5");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'h11111111, 32'h11111111 ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 6");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'haaeeffdd, 32'h000011ee ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 7");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'hedca1234, 32'h0beefeba ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 8");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'h11111111, 32'hffffffff ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 9");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'hffffffff, 32'h0beefeba ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 10");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'h0000ffff, 32'hffffffff ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 11");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'hefffffff, 32'hffffffff ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 12");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'hffffffff, 32'h00000001 ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Teste 13");
+	# ( 10*CLOCK_PERIOD )
+	execdivide( 32'hefffffff, 32'h11111111 ); // call task
+	# ( 10*CLOCK_PERIOD )
+	$display("Test end");
 	// add more tests to improve the toggle coverage to  more than 95%
 
 end
@@ -101,6 +140,19 @@ begin
   stop = 1'b1;        // Assert stop
   @(negedge clock);
   stop = 1'b0;
+  if ( quotient == (divdn / divdr ) )   // the start bit should be 0
+		begin
+			$display("Quotient = %h correct", quotient);
+		end else begin
+			$display("Quotient = %h wrong correct is = %h", quotient,(divdn / divdr ));
+	end
+	if ( rest == (divdn % divdr ) )   // the start bit should be 0
+		begin
+			$display("Rest = %h correct", rest);
+		end else begin
+			$display("Rest = %h wrong correct is %h", rest,(divdn % divdr ));
+	end
+  
  end  
 endtask
 
