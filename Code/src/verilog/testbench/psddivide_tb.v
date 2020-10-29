@@ -3,7 +3,7 @@ PSD 2020/21
 Lab 1 - Design and verification of a sequential non-restoring divider
 
 */
-//`timescale 1ns/1ns;
+`timescale 1ns/1ns
 
 module psddivide_tb;
   
@@ -119,7 +119,6 @@ begin
 	execdivide( 32'hefffffff, 32'h11111111 ); // call task
 	# ( 10*CLOCK_PERIOD )
 	$display("Test end");
-	// add more tests to improve the toggle coverage to  more than 95%
 
 end
 
@@ -140,13 +139,13 @@ begin
   stop = 1'b1;        // Assert stop
   @(negedge clock);
   stop = 1'b0;
-  if ( quotient == (divdn / divdr ) )   // the start bit should be 0
+  if ( quotient == (divdn / divdr ) )   // testa o quotient
 		begin
 			$display("Quotient = %h correct", quotient);
 		end else begin
 			$display("Quotient = %h wrong correct is = %h", quotient,(divdn / divdr ));
 	end
-	if ( rest == (divdn % divdr ) )   // the start bit should be 0
+	if ( rest == (divdn % divdr ) )   // testa o rest
 		begin
 			$display("Rest = %h correct", rest);
 		end else begin
